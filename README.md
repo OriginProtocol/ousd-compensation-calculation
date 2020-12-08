@@ -1,16 +1,18 @@
 # OUSD Compensation Calculation
 
-To generate all data:
+## Usage
+
+### Generate all data
 
     # ./run.sh END_BLOCK OUTPUT_DIR ADDRESS_LIST JSONRPC_ENDPOINT
     ./run.sh 11297907 data/ metadata/unique_addresses.txt http://eth-mainnet.alchemyapi.io/v1/asdf1234
 
-To extract all data from blockchain untransformed:
+### Extract data from Ethereum
 
     # ./extract.sh END_BLOCK OUTPUT_DIR ADDRESS_LIST JSONRPC_ENDPOINT
     ./extract.sh 11297907 data/ metadata/unique_addresses.txt http://eth-mainnet.alchemyapi.io/v1/asdf1234
 
-## Data
+## Extracted Data
 
 - OUSD balances at block `11272254` and given `END_BLOCK`
 - Uniswap LP balances at block `11272254` and given `END_BLOCK`
