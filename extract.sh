@@ -8,7 +8,7 @@
 #
 # Usage
 # -----
-# ./run.sh 11297907 data/ metadata/unique_addresses.txt http://eth-mainnet.alchemyapi.io/v1/asdf1234
+# ./extract.sh 11297907 data/ metadata/unique_addresses.txt http://eth-mainnet.alchemyapi.io/v1/asdf1234
 ###################################################################
 
 LOG_LEVEL="INFO"

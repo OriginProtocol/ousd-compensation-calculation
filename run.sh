@@ -2,6 +2,8 @@
 ###################################################################
 # This is the motherscript that runs all the others to generate a
 # complete dataset.
+# 
+# ./run.sh 11297907 data/ metadata/unique_addresses.txt http://eth-mainnet.alchemyapi.io/v1/asdf1234
 ###################################################################
 
 BLOCK_END="$1"
