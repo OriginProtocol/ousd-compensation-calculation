@@ -103,8 +103,6 @@ def main():
 
     # The tiny drift here is from internal contract math leaving behind tiny
     # fractions of an indivisible unit
-    #
-    # amount.mul(ousd.rebasingCreditsPerToken()).div(1e18)
     assert abs(total_supply - known_credit_balance) < MAX_CREDIT_DRIFT, \
         "total_supply != known_credit_balance ({} != {})".format(
             total_supply,

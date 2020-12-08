@@ -83,8 +83,8 @@ SNOWSWAP_STAKING_BEFORE="$OUT_DIR/snowswap_stakers_$BLOCK_START.csv"
 SNOWSWAP_STAKING_AFTER="$OUT_DIR/snowswap_stakers_$BLOCK_END.csv"
 
 UNISWAP_SWAPS="$OUT_DIR/uniswap_swaps_$BLOCK_START-$BLOCK_END.csv"
-SUSHISWAP_SWAPS="$OUT_DIR/sushiswap_swaps_$BLOCK_START$BLOCK_END.csv"
-MOONISWAP_SWAPS="$OUT_DIR/mooniswap_swaps_$BLOCK_START$BLOCK_END.csv"
+SUSHISWAP_SWAPS="$OUT_DIR/sushiswap_swaps_$BLOCK_START-$BLOCK_END.csv"
+MOONISWAP_SWAPS="$OUT_DIR/mooniswap_swaps_$BLOCK_START-$BLOCK_END.csv"
 
 # Do not reuse directories to prevent overwriting
 test -d $OUT_DIR

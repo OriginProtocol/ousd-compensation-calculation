@@ -187,6 +187,7 @@ def main():
                     to_cpt
                 )
 
+        # token0,token1,lp_address,lp_balance,token0_value,token1_value
         print('{},{},{},{},{},{}'.format(
             a,
             b,
