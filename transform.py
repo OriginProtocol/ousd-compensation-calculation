@@ -241,7 +241,7 @@ class Account:
     @property
     def trading_gain_usdt(self):
         """ Net USDT gains from trading OUSD after the hack """
-        if self._ousd_balance_start <= 0:
+        if (self._ousd_balance_start + self._ousd_lp_start) <= 0:
             return 0
 
         return self.usdt_swap_in
@@ -249,7 +249,7 @@ class Account:
     @property
     def trading_gain_usdc(self):
         """ Net USDC gains from trading OUSD after the hack """
-        if self._ousd_balance_start <= 0:
+        if (self._ousd_balance_start + self._ousd_lp_start) <= 0:
             return 0
 
         return self.usdc_swap_in
@@ -257,7 +257,7 @@ class Account:
     @property
     def trading_gain_weth(self):
         """ Net WETH gains from trading OUSD after the hack """
-        if self._ousd_balance_start <= 0:
+        if (self._ousd_balance_start + self._ousd_lp_start) <= 0:
             return 0
 
         return self.weth_swap_in
@@ -681,17 +681,29 @@ def main():
 
     if args.account:
         account = Web3.toChecksumAddress(args.account)
+        print('ousd_balance_start: {} ({})'.format(
+            accounts[account]._ousd_balance_start,
+            accounts[account]._ousd_balance_start / 1e18
+        ))
+        print('ousd_lp_start: {} ({})'.format(
+            accounts[account]._ousd_lp_start,
+            accounts[account]._ousd_lp_start / 1e18
+        ))
         print('eligible balance: {} (${})'.format(
             accounts[account].eligible_balance_usd,
             accounts[account].eligible_balance_usd / 1e18
         ))
         print(
-            'adjusted_ousd_compensation:',
-            accounts[account].adjusted_ousd_compensation
+            'adjusted_ousd_compensation: {} ({})'.format(
+                accounts[account].adjusted_ousd_compensation,
+                accounts[account].adjusted_ousd_compensation / 1e18
+            )
         )
         print(
-            'adjusted_ogn_compensation:',
-            accounts[account].adjusted_ogn_compensation
+            'adjusted_ogn_compensation: {} ({})'.format(
+                accounts[account].adjusted_ogn_compensation,
+                accounts[account].adjusted_ogn_compensation / 1e18
+            )
         )
         print('USDT swaps:', accounts[account]._usdt_swaps)
         print('USDC swaps:', accounts[account]._usdc_swaps)
