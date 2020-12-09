@@ -324,7 +324,7 @@ class Account:
         assert ogn_usd_value + self.adjusted_ousd_compensation == self.eligible_balance_usd
 
         # Actual OGN according to given price
-        return floor((ogn_usd_value * self.params.ogn_price_usd) / Decimal(1e18))
+        return floor(ogn_usd_value / self.params.ogn_price_usd * Decimal(1e18))
 
 
 def convert_decimals(val, decin, decout):
