@@ -224,21 +224,6 @@ class Account:
         )
 
     @property
-    def lp_usdt_loss(self):
-        """ USDT loss on the other side of OUSD LPs - NOT USED """
-        return self._usdt_lp_start - self._usdt_lp_end
-
-    @property
-    def lp_usdc_loss(self):
-        """ USDC loss on the other side of OUSD LPs - NOT USED """
-        return self._usdc_lp_start - self._usdc_lp_end
-
-    @property
-    def lp_weth_loss(self):
-        """ WETH loss on the other side of OUSD LPs - NOT USED """
-        return self._weth_lp_start - self._weth_lp_end
-
-    @property
     def trading_gain_usdt(self):
         """ Net USDT gains from trading OUSD after the hack """
         if (self._ousd_balance_start + self._ousd_lp_start) <= 0:
