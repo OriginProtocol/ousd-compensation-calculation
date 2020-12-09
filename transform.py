@@ -146,12 +146,24 @@ class Account:
     def to_list(self):
         """ Display this account in a list with these values:
 
-        address, eligible_balance, ousd_compensation, ogn_compensation
+        address, eligible_ousd_value_human, ousd_compensation_human,
+        ogn_compensation_human, eligible_ousd_value,
+        ousd_compensation, ogn_compensation
         """
         return [
             self.address,
             locale.currency(
                 Decimal(self.eligible_balance_usd) / Decimal(1e18),
+                symbol=False,
+                grouping=True
+            ),
+            locale.currency(
+                Decimal(self.adjusted_ousd_compensation) / Decimal(1e18),
+                symbol=False,
+                grouping=True
+            ),
+            locale.currency(
+                Decimal(self.adjusted_ogn_compensation) / Decimal(1e18),
                 symbol=False,
                 grouping=True
             ),
@@ -163,7 +175,9 @@ class Account:
     def to_csv_row(self):
         """ Print a CSV row
 
-        address, eligible_balance, ousd_compensation, ogn_compensation
+        address, eligible_ousd_value_human, ousd_compensation_human,
+        ogn_compensation_human, eligible_ousd_value,
+        ousd_compensation, ogn_compensation
         """
         return ','.join(['"{}"'.format(x) if ',' in str(x) else str(x) for x in self.to_list()])
 
@@ -249,6 +263,14 @@ class Account:
         return self.weth_swap_in
 
     @property
+    def trading_gain_virgox(self):
+        """ Gains trading OUSD after the hack """
+        if not self._virgox_proceeds:
+            return 0
+
+        return sum([x for x in self._virgox_proceeds])
+
+    @property
     def trading_gain_total_usd(self):
         """ Total gain in USD
 
@@ -258,6 +280,7 @@ class Account:
             convert_decimals(self.trading_gain_usdt, 6, 18)
             + convert_decimals(self.trading_gain_usdc, 6, 18)
             + self._eth_to_usd(self.trading_gain_weth)
+            + self.trading_gain_virgox
         )
 
     @property
@@ -619,9 +642,11 @@ def main():
     for vp in virgox_proceeds:
         [address, amount, price, usd_proceeds] = vp
 
-        create_account_if_not_exists(accounts, staker_address, params)
+        address = Web3.toChecksumAddress(address)
 
-        accounts[staker_address].add_virgox_proceed(
+        create_account_if_not_exists(accounts, address, params)
+
+        accounts[address].add_virgox_proceed(
             # Since we're working with integers
             int(Decimal(usd_proceeds) * Decimal(1e18))
         )
@@ -674,7 +699,8 @@ def main():
 
     else:
         # CSV out compensation numbers
-        # address, eligible_ousd_value_human, eligible_ousd_value,
+        # address, eligible_ousd_value_human, ousd_compensation_human,
+        # ogn_compensation_human, eligible_ousd_value,
         # ousd_compensation, ogn_compensation
         for addr in accounts.keys():
             if addr in blacklist or accounts[addr].eligible_balance_usd == 0:
