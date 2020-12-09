@@ -21,8 +21,7 @@ JSONRPC_ENDPOINT="$4"
 # Transform
 ###
 
-# ./transform.sh
-python transform.py -o $OUT_DIR -s $BLOCK_START -e $BLOCK_END -b metadata/blacklisted.txt
+python transform.py -o $OUT_DIR -s $BLOCK_START -e $BLOCK_END -b metadata/blacklisted.txt > $OUT_DIR/reimbursements.csv
 
 ###
 # Load
