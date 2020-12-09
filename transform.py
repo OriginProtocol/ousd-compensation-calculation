@@ -699,6 +699,7 @@ def main():
         # address, eligible_ousd_value_human, ousd_compensation_human,
         # ogn_compensation_human, eligible_ousd_value,
         # ousd_compensation, ogn_compensation
+        print('address,eligible_ousd_value_human,ousd_compensation_human,ogn_compensation_human,eligible_ousd_value,ousd_compensation,ogn_compensation')
         for addr in accounts.keys():
             if addr in blacklist or accounts[addr].eligible_balance_usd == 0:
                 continue
