@@ -489,8 +489,8 @@ def main():
     params = CalcParameters(
         split_threshold=Decimal(1000e18),
         ousd_ogn_split=Decimal(0.25),  # 25% OUSD / 75% OGN
-        ogn_price_usd=Decimal(15e16),  # $0.15
-        eth_value_usd=574,
+        ogn_price_usd=Decimal(1492e14),  # $0.1492
+        eth_value_usd=578.24,  # USD
         minimum_threshold=1e16  # $0.01
     )
 
