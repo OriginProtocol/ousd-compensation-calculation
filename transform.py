@@ -147,7 +147,7 @@ class Account:
         """ Display this account in a list with these values:
 
         address, eligible_ousd_value_human, ousd_compensation_human,
-        ogn_compensation_human, ogn_compensation_w_interest_human,
+        ogn_compensation_w_interest_human, ogn_compensation_human,
         eligible_ousd_value, ousd_compensation, ogn_compensation
         """
         return [
@@ -163,12 +163,12 @@ class Account:
                 grouping=True
             ),
             locale.currency(
-                Decimal(self.adjusted_ogn_compensation) / Decimal(1e18),
+                Decimal(self.adjusted_ogn_compensation) * Decimal(1.25) / Decimal(1e18),
                 symbol=False,
                 grouping=True
             ),
             locale.currency(
-                Decimal(self.adjusted_ogn_compensation) * Decimal(1.25) / Decimal(1e18),
+                Decimal(self.adjusted_ogn_compensation) / Decimal(1e18),
                 symbol=False,
                 grouping=True
             ),
@@ -181,8 +181,8 @@ class Account:
         """ Print a CSV row
 
         address, eligible_ousd_value_human, ousd_compensation_human,
-        ogn_compensation_human, eligible_ousd_value,
-        ousd_compensation, ogn_compensation
+        ogn_compensation_w_interest_human, ogn_compensation_human,
+        eligible_ousd_value, ousd_compensation, ogn_compensation
         """
         return ','.join(['"{}"'.format(x) if ',' in str(x) else str(x) for x in self.to_list()])
 
@@ -702,9 +702,9 @@ def main():
     else:
         # CSV out compensation numbers
         # address, eligible_ousd_value_human, ousd_compensation_human,
-        # ogn_compensation_human, ogn_compensation_w_interest_human, eligible_ousd_value,
+        # ogn_compensation_w_interest_human, ogn_compensation_human, eligible_ousd_value,
         # ousd_compensation, ogn_compensation
-        print('address,eligible_ousd_value_human,ousd_compensation_human,ogn_compensation_human,ogn_compensation_w_interest_human,eligible_ousd_value,ousd_compensation,ogn_compensation')
+        print('address,eligible_ousd_value_human,ousd_compensation_human,ogn_compensation_w_interest_human,ogn_compensation_human,eligible_ousd_value,ousd_compensation,ogn_compensation')
         for addr in accounts.keys():
             if addr in blacklist or accounts[addr].eligible_balance_usd == 0:
                 continue
