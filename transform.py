@@ -147,8 +147,8 @@ class Account:
         """ Display this account in a list with these values:
 
         address, eligible_ousd_value_human, ousd_compensation_human,
-        ogn_compensation_human, eligible_ousd_value,
-        ousd_compensation, ogn_compensation
+        ogn_compensation_human, ogn_compensation_w_interest_human,
+        eligible_ousd_value, ousd_compensation, ogn_compensation
         """
         return [
             self.address,
@@ -167,9 +167,14 @@ class Account:
                 symbol=False,
                 grouping=True
             ),
-            self.eligible_balance_usd,
-            self.adjusted_ousd_compensation,
-            self.adjusted_ogn_compensation
+            locale.currency(
+                Decimal(self.adjusted_ogn_compensation) * Decimal(1.25) / Decimal(1e18),
+                symbol=False,
+                grouping=True
+            ),
+            Decimal(self.eligible_balance_usd),
+            Decimal(self.adjusted_ousd_compensation),
+            Decimal(self.adjusted_ogn_compensation)
         ]
 
     def to_csv_row(self):
@@ -697,9 +702,9 @@ def main():
     else:
         # CSV out compensation numbers
         # address, eligible_ousd_value_human, ousd_compensation_human,
-        # ogn_compensation_human, eligible_ousd_value,
+        # ogn_compensation_human, ogn_compensation_w_interest_human, eligible_ousd_value,
         # ousd_compensation, ogn_compensation
-        print('address,eligible_ousd_value_human,ousd_compensation_human,ogn_compensation_human,eligible_ousd_value,ousd_compensation,ogn_compensation')
+        print('address,eligible_ousd_value_human,ousd_compensation_human,ogn_compensation_human,ogn_compensation_w_interest_human,eligible_ousd_value,ousd_compensation,ogn_compensation')
         for addr in accounts.keys():
             if addr in blacklist or accounts[addr].eligible_balance_usd == 0:
                 continue
