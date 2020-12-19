@@ -234,7 +234,7 @@ class Account:
         if (self._ousd_balance_start + self._ousd_lp_start) <= 0:
             return 0
 
-        return self.usdt_swap_in
+        return self.usdt_swap_in - self.usdt_swap_out
 
     @property
     def trading_gain_usdc(self):
@@ -242,7 +242,7 @@ class Account:
         if (self._ousd_balance_start + self._ousd_lp_start) <= 0:
             return 0
 
-        return self.usdc_swap_in
+        return self.usdc_swap_in - self.usdc_swap_out
 
     @property
     def trading_gain_weth(self):
@@ -250,7 +250,7 @@ class Account:
         if (self._ousd_balance_start + self._ousd_lp_start) <= 0:
             return 0
 
-        return self.weth_swap_in
+        return self.weth_swap_in - self.weth_swap_out
 
     @property
     def trading_gain_virgox(self):
@@ -279,7 +279,7 @@ class Account:
         diff = (
             self._ousd_balance_start
             + self._ousd_lp_start
-            - self.trading_gain_total_usd
+            - max(self.trading_gain_total_usd, 0)
         )
 
         if diff < self.params.minimum_threshold:
